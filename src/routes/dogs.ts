@@ -22,11 +22,14 @@ export function getDogRoutes(_pool: Pool, app: Express) {
 
     app.get("/dogs/", async (_req, res) => {
         try {
-            const response = axios.get<DogApiRandomResponse>(
-                "https://dog.ceo/api/breeds/image/random/2"
-            );
-            const dogUrls = (await response).data.message;
-            const dogs = dogUrls.map(dogUrlToDog);
+            let dogs = [];
+            do {
+                const response = axios.get<DogApiRandomResponse>(
+                    "https://dog.ceo/api/breeds/image/random/2"
+                );
+                const dogUrls = (await response).data.message;
+                dogs = dogUrls.map(dogUrlToDog);
+            } while (dogs[0].name === dogs[1].name);
             res.status(200).json(dogs);
         } catch (error) {
             console.error(error);
