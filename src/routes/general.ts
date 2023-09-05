@@ -1,15 +1,13 @@
 import { Pool } from "pg";
 import express from "express";
 
-type Express = ReturnType<typeof express>
+type Express = ReturnType<typeof express>;
 
 export function getGeneralRoutes(pool: Pool, app: Express) {
-
-
     app.get("/", async (_req, res) => {
         res.json({ msg: "Hello! There's nothing interesting for GET /" });
     });
-    
+
     app.get("/health-check", async (_req, res) => {
         try {
             //For this to be successful, must connect to db
@@ -21,7 +19,4 @@ export function getGeneralRoutes(pool: Pool, app: Express) {
             res.status(500).send("An error occurred. Check server logs.");
         }
     });
-    
-
 }
-

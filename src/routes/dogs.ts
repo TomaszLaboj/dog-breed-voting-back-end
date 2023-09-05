@@ -4,11 +4,9 @@ import axios from "axios";
 import { DogApiRandomResponse } from "../types/express/server";
 import { dogUrlToDog } from "./core/utils";
 
-type Express = ReturnType<typeof express>
+type Express = ReturnType<typeof express>;
 
 export function getDogRoutes(_pool: Pool, app: Express) {
-
-
     // app.get("/dogs/", async (_req, res) => {
     //     const query = "";
     //     const values = []
@@ -22,20 +20,17 @@ export function getDogRoutes(_pool: Pool, app: Express) {
     //     }
     // });
 
-
     app.get("/dogs/", async (_req, res) => {
         try {
-            const response = axios.get<DogApiRandomResponse>("https://dog.ceo/api/breeds/image/random/2")
-            const dogUrls = (await response).data.message
-            const dogs = dogUrls.map(dogUrlToDog)
+            const response = axios.get<DogApiRandomResponse>(
+                "https://dog.ceo/api/breeds/image/random/2"
+            );
+            const dogUrls = (await response).data.message;
+            const dogs = dogUrls.map(dogUrlToDog);
             res.status(200).json(dogs);
         } catch (error) {
             console.error(error);
             res.status(500).send("An error occurred. Check server logs.");
         }
     });
-
-    
-
 }
-
