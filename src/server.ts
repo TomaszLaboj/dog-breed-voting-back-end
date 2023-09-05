@@ -24,6 +24,7 @@ getDogRoutes(pool, app);
 
 
 connectToDBAndStartListening();
+// console.log(pool)
 
 async function connectToDBAndStartListening() {
     console.log("Attempting to connect to db");
