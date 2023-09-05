@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS food;
+DROP TABLE IF EXISTS breeds;
 
-CREATE TABLE  food (
-    id          serial PRIMARY KEY,
-    title       varchar(40) NOT NULL
+CREATE TABLE  breeds (
+    breed_name   VARCHAR(255) PRIMARY KEY,
+    votes       INT NOT NULL DEFAULT 0
 );
 
-INSERT INTO food (title) VALUES ('sourdough'), ('olive oil'), ('pizza'), ('picanha'), ('gorgonzola'), ('basil');
+INSERT INTO breeds (breed_name) VALUES ('hound-afghan'), ('retriever-golden'), ('eskimo');

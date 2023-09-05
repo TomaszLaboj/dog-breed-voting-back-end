@@ -6,6 +6,7 @@ import { getEnvVarOrFail } from "./support/envVarUtils";
 import { setupDBClientConfig } from "./support/setupDBClientConfig";
 import { getDogRoutes } from "./routes/dogs";
 import { getGeneralRoutes } from "./routes/general";
+import morgan from "morgan";
 
 dotenv.config(); //Read .env file lines as though they were env vars.
 
@@ -17,6 +18,7 @@ const app = express();
 
 app.use(express.json()); //add JSON body parser to each following route handler
 app.use(cors()); //add CORS support to each following route handler
+app.use(morgan("combined"));
 
 getGeneralRoutes(pool, app);
 getDogRoutes(pool, app);
