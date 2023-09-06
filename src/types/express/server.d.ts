@@ -4,6 +4,6 @@ export interface Dog {
 }
 
 export interface DogApiRandomResponse {
-    message: string[];
+    message: string[] | string;
     state: string;
 }
