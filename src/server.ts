@@ -7,6 +7,7 @@ import { setupDBClientConfig } from "./support/setupDBClientConfig";
 import { getDogRoutes } from "./routes/dogs";
 import { getGeneralRoutes } from "./routes/general";
 import morgan from "morgan";
+import { getLeaderboardRoutes } from "./routes/leaderboard";
 
 dotenv.config(); //Read .env file lines as though they were env vars.
 
@@ -22,6 +23,7 @@ app.use(morgan("combined"));
 
 getGeneralRoutes(pool, app);
 getDogRoutes(pool, app);
+getLeaderboardRoutes(pool, app);
 
 connectToDBAndStartListening();
 // console.log(pool)
