@@ -24,12 +24,12 @@ export function getDogRoutes(_pool: Pool, app: Express) {
         try {
             let dogs = [];
             do {
-                const response = axios.get<DogApiRandomResponse>(
+                const response = await axios.get<DogApiRandomResponse>(
                     "https://dog.ceo/api/breeds/image/random/2"
                 );
-                const dogUrls = (await response).data.message as string[];
+                const dogUrls = response.data.message as string[];
                 dogs = dogUrls.map(dogUrlToDog);
-            } while (dogs[0].name === dogs[1].name);
+            } while (dogs[0].breed_name === dogs[1].breed_name);
             res.status(200).json(dogs);
         } catch (error) {
             console.error(error);
@@ -41,8 +41,8 @@ export function getDogRoutes(_pool: Pool, app: Express) {
         const urlBreed = getRandomImageUrlByBreed(req.params.breed_name);
 
         try {
-            const response = axios.get<DogApiRandomResponse>(urlBreed);
-            const dogUrl = (await response).data.message as string;
+            const response = await axios.get<DogApiRandomResponse>(urlBreed);
+            const dogUrl = response.data.message as string;
             const dog = dogUrlToDog(dogUrl);
             res.status(200).json(dog);
         } catch (error) {
