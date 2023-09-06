@@ -1,4 +1,4 @@
-import { Dog } from "../../types/express/server";
+import { Dog } from "../types/express/server";
 
 export function dogUrlToDog(dogUrl: string): Dog {
     const returnDog: Dog = {

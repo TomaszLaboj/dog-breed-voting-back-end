@@ -2,7 +2,7 @@ import { Pool } from "pg";
 import express from "express";
 import axios from "axios";
 import { DogApiRandomResponse } from "../types/express/server";
-import { dogUrlToDog } from "./core/utils";
+import { dogUrlToDog } from "../core/utils";
 
 type Express = ReturnType<typeof express>;
 
@@ -20,7 +20,7 @@ export function getDogRoutes(_pool: Pool, app: Express) {
     //     }
     // });
 
-    app.get("/dogs/", async (_req, res) => {
+    app.get("/dogs", async (_req, res) => {
         try {
             let dogs = [];
             do {
