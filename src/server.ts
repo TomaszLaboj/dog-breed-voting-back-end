@@ -25,8 +25,6 @@ getGeneralRoutes(pool, app);
 getDogRoutes(pool, app);
 getLeaderboardRoutes(pool, app);
 
-
-
 connectToDBAndStartListening();
 // console.log(pool)
 

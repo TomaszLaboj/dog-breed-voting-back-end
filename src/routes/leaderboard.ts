@@ -4,8 +4,6 @@ import express from "express";
 type Express = ReturnType<typeof express>;
 
 export function getLeaderboardRoutes(pool: Pool, app: Express) {
-
-
     app.get("/leaderboard", async (_req, res) => {
         try {
             const leaderboardQuery =
