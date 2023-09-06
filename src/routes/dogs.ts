@@ -2,7 +2,7 @@ import { Pool } from "pg";
 import express from "express";
 import axios from "axios";
 import { DogApiRandomResponse } from "../types/express/server";
-import { dogUrlToDog } from "../core/utils";
+import { dogUrlToDog, getRandomImageUrlByBreed } from "../core/utils";
 
 type Express = ReturnType<typeof express>;
 
@@ -38,12 +38,10 @@ export function getDogRoutes(_pool: Pool, app: Express) {
     });
 
     app.get<{ breed_name: string }>("/dogs/:breed_name", async (req, res) => {
-        const urlBreedName = req.params.breed_name.replace("-", "/");
+        const urlBreed = getRandomImageUrlByBreed(req.params.breed_name);
 
         try {
-            const response = axios.get<DogApiRandomResponse>(
-                `https://dog.ceo/api/breed/${urlBreedName}/images/random`
-            );
+            const response = axios.get<DogApiRandomResponse>(urlBreed);
             const dogUrl = (await response).data.message as string;
             const dog = dogUrlToDog(dogUrl);
             res.status(200).json(dog);

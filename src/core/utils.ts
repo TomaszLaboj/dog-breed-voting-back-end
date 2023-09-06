@@ -13,3 +13,9 @@ export function dogUrlToDog(dogUrl: string): Dog {
 
     return returnDog;
 }
+
+export function getRandomImageUrlByBreed(breed_name: string): string {
+    const urlBreedName = breed_name.replace("-", "/");
+
+    return `https://dog.ceo/api/breed/${urlBreedName}/images/random`;
+}
