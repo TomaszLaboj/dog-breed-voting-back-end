@@ -1,7 +1,14 @@
 # Dog Voting App API
 
+Contributors: Ana, Henry, Rosie & Tomasz
+
 # Routes
 
-Below you will find information about the various request routes, their structure, responses
+For documentation and examples follow this link:
+https://documenter.getpostman.com/view/28881704/2s9YBz3FFr
 
-## /vote/:breed_name
+We used this Dog API to get dog breed photos:
+https://dog.ceo/dog-api/
+
+Link to the front-end app:
+https://dog-breed-voting-app.netlify.app/

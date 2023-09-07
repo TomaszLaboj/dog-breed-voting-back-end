@@ -1,25 +1,23 @@
 import express from "express";
 import { Pool } from "pg";
-import { checkValidBreed, dbDogToDogWithVotes } from "../core/utils";
+import { checkValidBreed, leaderboardDogToDogWithVotes } from "../core/utils";
 
 type Express = ReturnType<typeof express>;
 
-// CLEAR CODE
 export function getLeaderboardRoutes(pool: Pool, app: Express) {
     app.get("/leaderboard", async (_req, res) => {
         try {
             const query_leaderboard =
                 "SELECT * FROM breeds ORDER BY votes DESC LIMIT 10";
             const response = await pool.query(query_leaderboard);
-            const dbDogs = response.rows;
-            res.status(200).json(dbDogs);
+            const leaderboardDogs = response.rows;
+            res.status(200).json(leaderboardDogs);
         } catch (error) {
             console.error(error);
             res.status(500).send("An error occurred. Check server logs.");
         }
     });
 
-    // CLEAR CODE
     app.get<{ top_nb: string }>("/leaderboard/:top_nb", async (req, res) => {
         try {
             const query_leaderboard =
@@ -27,9 +25,11 @@ export function getLeaderboardRoutes(pool: Pool, app: Express) {
             const response = await pool.query(query_leaderboard, [
                 req.params.top_nb,
             ]);
-            const topDbDogs = response.rows;
+            const topLeaderboardDogs = response.rows;
             const topDogsWithVotes = await Promise.all(
-                topDbDogs.map((oneDog) => dbDogToDogWithVotes(oneDog))
+                topLeaderboardDogs.map((oneDog) =>
+                    leaderboardDogToDogWithVotes(oneDog)
+                )
             );
 
             res.status(200).json(topDogsWithVotes);
@@ -39,7 +39,6 @@ export function getLeaderboardRoutes(pool: Pool, app: Express) {
         }
     });
 
-    // CLEAR CODE
     app.put("/vote/:breed_name", async (req, res) => {
         try {
             await checkValidBreed(req.params.breed_name);

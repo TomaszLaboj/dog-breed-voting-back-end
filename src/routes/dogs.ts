@@ -1,25 +1,16 @@
-import { Pool } from "pg";
-import express from "express";
 import axios from "axios";
+import express from "express";
+import { Pool } from "pg";
+import {
+    areDogsInvalidOrEqual,
+    dogUrlToDog,
+    getRandomImageUrlByBreed,
+} from "../core/utils";
 import { DogApiRandomResponse } from "../types/express/server";
-import { dogUrlToDog, getRandomImageUrlByBreed } from "../core/utils";
 
 type Express = ReturnType<typeof express>;
 
 export function getDogRoutes(_pool: Pool, app: Express) {
-    // app.get("/dogs/", async (_req, res) => {
-    //     const query = "";
-    //     const values = []
-    //     try {
-    //         const response = await pool.query(query, values);
-    //         const data = response.rows;
-    //         res.status(200).json(data);
-    //     } catch (error) {
-    //         console.error(error);
-    //         res.status(500).send("An error occurred. Check server logs.");
-    //     }
-    // });
-
     app.get("/dogs", async (_req, res) => {
         try {
             let dogs = [];
@@ -29,7 +20,7 @@ export function getDogRoutes(_pool: Pool, app: Express) {
                 );
                 const dogUrls = response.data.message as string[];
                 dogs = dogUrls.map(dogUrlToDog);
-            } while (dogs[0].breed_name === dogs[1].breed_name);
+            } while (await areDogsInvalidOrEqual(dogs[0], dogs[1]));
             res.status(200).json(dogs);
         } catch (error) {
             console.error(error);
