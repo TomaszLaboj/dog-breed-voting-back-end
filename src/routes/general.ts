@@ -1,21 +1,7 @@
-import { Pool } from "pg";
 import express from "express";
-import { isRequestInvalid } from "../core/utils";
+import { Pool } from "pg";
 
 type Express = ReturnType<typeof express>;
-
-async function testIsRequestInvalid(status: string, url: string) {
-    console.log(status, await isRequestInvalid(url));
-}
-
-testIsRequestInvalid(
-    "should be true",
-    "https://images.dog.ceo/breeds/cavapoo/lulu2.jpg"
-);
-testIsRequestInvalid(
-    "should be false",
-    "https://images.dog.ceo/breeds/mastiff-bull/n02108422_5221.jpg"
-);
 
 export function getGeneralRoutes(pool: Pool, app: Express) {
     app.get("/", async (_req, res) => {
