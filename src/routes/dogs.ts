@@ -20,7 +20,6 @@ export function getDogRoutes(_pool: Pool, app: Express) {
                 );
                 const dogUrls = response.data.message as string[];
                 dogs = dogUrls.map(dogUrlToDog);
-                console.log("Hello");
             } while (await areDogsInvalidOrEqual(dogs[0], dogs[1]));
             res.status(200).json(dogs);
         } catch (error) {
