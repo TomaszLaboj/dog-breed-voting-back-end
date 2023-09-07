@@ -1,6 +1,6 @@
 import axios from "axios";
 import {
-    DbDog,
+    LeaderboardDog,
     Dog,
     DogApiRandomResponse,
     DogWithVotes,
@@ -20,12 +20,14 @@ export function dogUrlToDog(dogUrl: string): Dog {
     return returnDog;
 }
 
-export async function dbDogToDogWithVotes(dbDog: DbDog): Promise<DogWithVotes> {
-    const urlBreed = getRandomImageUrlByBreed(dbDog.breed_name);
+export async function leaderboardDogToDogWithVotes(
+    leaderboardDog: LeaderboardDog
+): Promise<DogWithVotes> {
+    const urlBreed = getRandomImageUrlByBreed(leaderboardDog.breed_name);
     const response = await axios.get<DogApiRandomResponse>(urlBreed);
     const dogUrl = response.data.message as string;
 
-    return { ...dbDog, imageUrl: dogUrl };
+    return { ...leaderboardDog, imageUrl: dogUrl };
 }
 
 export function getRandomImageUrlByBreed(breed_name: string): string {
@@ -52,4 +54,12 @@ export async function isRequestInvalid(url: string): Promise<boolean> {
     }
 
     return false;
+}
+
+export async function areDogsInvalidOrEqual(firstDog: Dog, secondDog: Dog) {
+    return (
+        firstDog.breed_name === secondDog.breed_name ||
+        (await isRequestInvalid(firstDog.imageUrl)) ||
+        (await isRequestInvalid(secondDog.imageUrl))
+    );
 }

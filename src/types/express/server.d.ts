@@ -3,7 +3,7 @@ export interface Dog {
     imageUrl: string;
 }
 
-export interface DbDog {
+export interface LeaderboardDog {
     breed_name: string;
     votes: number;
 }
