@@ -43,3 +43,9 @@ export async function checkValidBreed(breed_name: string): Promise<void> {
         throw new Error("Invalid dog breed");
     }
 }
+
+export async function isRequestInvalid(url: string): Promise<boolean> {
+    const urlResponse = await axios.get(url);
+    const isInvalid = urlResponse.status > 299 ? true : false;
+    return isInvalid;
+}
