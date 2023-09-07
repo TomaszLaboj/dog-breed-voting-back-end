@@ -45,7 +45,11 @@ export async function checkValidBreed(breed_name: string): Promise<void> {
 }
 
 export async function isRequestInvalid(url: string): Promise<boolean> {
-    const urlResponse = await axios.get(url);
-    const isInvalid = urlResponse.status > 299 ? true : false;
-    return isInvalid;
+    try {
+        await axios.get(url);
+    } catch (error) {
+        return true;
+    }
+
+    return false;
 }

@@ -35,8 +35,8 @@ export function getDogRoutes(_pool: Pool, app: Express) {
                 dogs = dogUrls.map(dogUrlToDog);
             } while (
                 dogs[0].breed_name === dogs[1].breed_name ||
-                await isRequestInvalid(dogs[0].imageUrl) ||
-                await isRequestInvalid(dogs[1].imageUrl)
+                (await isRequestInvalid(dogs[0].imageUrl)) ||
+                (await isRequestInvalid(dogs[1].imageUrl))
             );
             res.status(200).json(dogs);
         } catch (error) {
